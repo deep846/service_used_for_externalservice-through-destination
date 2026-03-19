@@ -1,0 +1,48 @@
+{
+ "meta": {
+  "creator": "cds-dk 9.6.1"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "empmanagement.Employee": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.Integer",
+     "notNull": true
+    },
+    "Name": {
+     "type": "cds.String"
+    },
+    "age": {
+     "type": "cds.Integer"
+    },
+    "Department": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "empmanagement.studentss": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "Id": {
+     "key": true,
+     "type": "cds.Integer",
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "empmanagement": {
+   "kind": "service",
+   "@cds.external": true
+  }
+ }
+}
