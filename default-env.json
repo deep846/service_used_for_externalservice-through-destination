@@ -1,10 +1,10 @@
 {
     "destinations":[
-    {
-        "name": "empmanagementsrvdest",
-        "url": "http://localhost:8090/odata/v4/employee",
-        "username":"deep@gmail.com",
-        "password":"12345"
-    }
-]
+        {
+            "name": "empmanagementsrvdest",
+            "url": "http://localhost:8090/odata/v4/employee",
+            "username":"deep@gmail.com",
+            "password":"12345"
+        }
+    ]
 }
