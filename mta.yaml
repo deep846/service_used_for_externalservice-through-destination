@@ -3,91 +3,111 @@ ID: services
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: services-srv
-  type: nodejs
-  path: gen/srv
-  requires:
-  - name: services-db
-  - name: services-destination-service
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-    instances: 1
-  build-parameters:
-    builder: npm-ci
-- name: services-db-deployer
-  type: hdb
-  path: gen/db
-  requires:
-  - name: services-db
-  parameters:
-    buildpack: nodejs_buildpack
-- name: services-destination-content
-  type: com.sap.application.content
-  requires:
-  - name: services-destination-service
+  - name: services-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: services-db
+      - name: services-destination-service
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
     parameters:
-      content-target: true
-  - name: services_html_repo_host
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  - name: services-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: services-db
     parameters:
-      service-key:
-        name: services_html_repo_host-key
-  - name: uaa_services
+      buildpack: nodejs_buildpack
+  - name: services-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: services-destination-service
+        parameters:
+          content-target: true
+      - name: services_html_repo_host
+        parameters:
+          service-key:
+            name: services_html_repo_host-key
+      - name: uaa_services
+        parameters:
+          service-key:
+            name: uaa_services-key
     parameters:
-      service-key:
-        name: uaa_services-key
-  parameters:
-    content:
-      instance:
-        destinations:
-        - Name: services_services_html_repo_host
-          ServiceInstanceName: services-html5-app-host-service
-          ServiceKeyName: services_html_repo_host-key
-          sap.cloud.service: services
-        - Authentication: OAuth2UserTokenExchange
-          Name: services_uaa_services
-          ServiceInstanceName: services-xsuaa-service
-          ServiceKeyName: uaa_services-key
-          sap.cloud.service: services
-        existing_destinations_policy: ignore
-  build-parameters:
-    no-source: true
+      content:
+        instance:
+          destinations:
+            - Name: services_services_html_repo_host
+              ServiceInstanceName: services-html5-app-host-service
+              ServiceKeyName: services_html_repo_host-key
+              sap.cloud.service: services
+            - Authentication: OAuth2UserTokenExchange
+              Name: services_uaa_services
+              ServiceInstanceName: services-xsuaa-service
+              ServiceKeyName: uaa_services-key
+              sap.cloud.service: services
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+  - name: services
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: services-destination-service
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
 resources:
-- name: services-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: services-destination-service
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: true
-      version: 1.0.0
-    service: destination
-    service-name: services-destination-service
-    service-plan: lite
-- name: services_html_repo_host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: services-html5-app-host-service
-    service-plan: app-host
-- name: uaa_services
-  type: org.cloudfoundry.managed-service
-  parameters:
-    path: ./xs-security.json
-    service: xsuaa
-    service-name: services-xsuaa-service
-    service-plan: application
+  - name: services-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: services-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+      service: destination
+      service-name: services-destination-service
+      service-plan: lite
+  - name: services_html_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: services-html5-app-host-service
+      service-plan: app-host
+  - name: uaa_services
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: services-xsuaa-service
+      service-plan: application
 parameters:
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm ci
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/react-student/static/css/main.acecca7f.css",
+    "main.js": "/react-student/static/js/main.e6608368.js",
+    "static/js/453.acfbecf0.chunk.js": "/react-student/static/js/453.acfbecf0.chunk.js",
+    "static/media/logo.svg": "/react-student/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/react-student/index.html",
+    "main.acecca7f.css.map": "/react-student/static/css/main.acecca7f.css.map",
+    "main.e6608368.js.map": "/react-student/static/js/main.e6608368.js.map",
+    "453.acfbecf0.chunk.js.map": "/react-student/static/js/453.acfbecf0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.acecca7f.css",
+    "static/js/main.e6608368.js"
+  ]
+}

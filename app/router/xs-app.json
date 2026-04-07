@@ -1,0 +1,26 @@
+{
+  "welcomeFile": "react-student/index.html",
+  "authenticationMethod": "none",
+  "routes": [
+    {
+      "source": "^/odata/(.*)$",
+      "destination": "srv-api",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/service/(.*)$",
+      "destination": "srv-api",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/api/(.*)$",
+      "target": "/catalog/$1",
+      "destination": "srv-api",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^(.*)$",
+      "localDir": "public"
+    }
+  ]
+}

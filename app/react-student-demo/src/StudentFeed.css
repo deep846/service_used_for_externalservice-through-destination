@@ -1,0 +1,261 @@
+:root {
+  --bg: #0a0b14;
+  --ink: #e9ecff;
+  --muted: #a2a8c9;
+
+  --card-1: rgba(18, 18, 38, .72);
+  --card-2: rgba(24, 24, 54, .72);
+  --border: rgba(255,255,255,.12);
+  --ring: rgba(123, 97, 255, .45);
+
+  --accent: #8a7bff;
+  --accent2: #08e3c2;
+  --danger: #ff6b6b;
+
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+  --blur: saturate(140%) blur(10px);
+
+  color-scheme: dark light;
+}
+
+/* Root canvas */
+.fx-root {
+  min-height: 100dvh;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 400px at -10% -10%, rgba(138, 123, 255, .25), transparent 60%),
+    radial-gradient(1000px 360px at 110% -20%, rgba(8, 227, 194, .25), transparent 60%),
+    linear-gradient(180deg, #0a0b14, #0a0b14 30%, #0a1130 100%);
+  padding-bottom: 120px; /* space for FAB */
+}
+
+/* Header */
+.fx-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: var(--blur);
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(10,11,20,.75), rgba(10,11,20,.35));
+  padding: 16px clamp(12px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+}
+.fx-title h1 {
+  margin: 0 0 4px; font-size: clamp(20px, 3.8vw, 28px); letter-spacing: .3px;
+}
+.fx-title p { margin: 0; color: var(--muted); font-size: 13px; }
+.fx-title p span { color: var(--accent2); }
+
+.fx-toolbar { display: flex; gap: 10px; align-items: center; }
+
+/* Search pill */
+.fx-search {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 10px;
+  min-width: clamp(220px, 36vw, 420px);
+  box-shadow: var(--shadow);
+}
+.fx-search input {
+  flex: 1; background: transparent; border: none; outline: none; color: var(--ink);
+}
+.fx-clear {
+  background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 18px;
+}
+.fx-icon { width: 18px; height: 18px; position: relative; display: inline-block; color: var(--muted); }
+.fx-i-search::before { content: ''; position: absolute; inset: 3px 3px 3px 3px; border: 2px solid currentColor; border-radius: 50%; }
+.fx-i-search::after { content: ''; position: absolute; width: 8px; height: 2px; right: -1px; bottom: -1px; background: currentColor; transform: rotate(45deg); border-radius: 2px; }
+
+/* Sort + buttons */
+.fx-sort {
+  display: flex; align-items: center; gap: 6px;
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 6px 8px;
+}
+.fx-sort select {
+  background: transparent; color: var(--ink); border: none; outline: none;
+}
+.fx-btn, .fx-link {
+  appearance: none; border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  color: var(--ink); border-radius: 12px; padding: 8px 12px;
+  cursor: pointer; box-shadow: var(--shadow);
+}
+.fx-btn:disabled { opacity: .6; cursor: not-allowed; }
+.fx-link { background: transparent; border: none; color: var(--accent); text-decoration: underline; }
+
+/* Alert */
+.fx-alert { margin: 14px auto; width: min(1100px, 94%); padding: 12px 14px; border-radius: 14px;
+  border: 1px solid var(--border); backdrop-filter: var(--blur); background: linear-gradient(180deg, var(--card-1), var(--card-2));
+}
+
+/* Grid */
+.fx-grid {
+  width: min(1200px, 94%); margin: 16px auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(10px, 2.5vw, 18px);
+}
+
+/* Card */
+.fx-card {
+  position: relative;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  border-radius: 18px;
+  padding: 14px 12px;
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--blur);
+  transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.fx-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ring);
+  box-shadow: 0 0 0 4px var(--ring), var(--shadow);
+}
+.fx-id { margin-bottom: 8px; }
+.fx-badge {
+  display: inline-block; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent), transparent 85%);
+  font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+}
+.fx-name {
+  font-size: clamp(15px, 2.8vw, 18px);
+  font-weight: 700; letter-spacing: .2px; min-height: 28px;
+  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+}
+.fx-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+.fx-icon-btn {
+  width: 40px; height: 40px; display: inline-grid; place-items: center;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  color: var(--ink); cursor: pointer;
+  transition: transform .06s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.fx-icon-btn:hover { border-color: var(--ring); box-shadow: 0 0 0 3px var(--ring); }
+.fx-icon-btn:active { transform: translateY(1px); }
+.fx-icon-btn.danger { border-color: color-mix(in srgb, var(--danger), transparent 50%); }
+.fx-icon-btn.danger:hover { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger), transparent 70%); }
+
+/* Tiny CSS icons */
+.fx-i-pen::before { content: ''; position: absolute; inset: 5px 8px 8px 5px; border: 2px solid currentColor; border-left: none; border-top: none; transform: rotate(-45deg); }
+.fx-i-trash::before { content: ''; position: absolute; left: 6px; right: 6px; bottom: 6px; top: 11px; border: 2px solid currentColor; border-top: none; border-radius: 4px; }
+.fx-i-trash::after { content: ''; position: absolute; left: 8px; right: 8px; top: 8px; height: 2px; background: currentColor; }
+
+/* Skeleton shimmer */
+.fx-skel .skel-block { height: 14px; border-radius: 6px; background:
+  linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.18), rgba(255,255,255,.06)); background-size: 200% 100%;
+  animation: fx-shimmer 1.1s linear infinite;
+}
+.fx-skel .fx-id .skel-block { width: 60px; }
+.fx-skel .fx-name.skel-block { width: 80%; height: 18px; margin-top: 8px; }
+.skel-dot { width: 16px; height: 16px; border-radius: 8px; background:
+  linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.18), rgba(255,255,255,.06)); background-size: 200% 100%;
+  animation: fx-shimmer 1.1s linear infinite;
+}
+@keyframes fx-shimmer { from { background-position-x: 200% } to { background-position-x: -200% } }
+
+/* New row flash */
+.fx-new { animation: fx-flash 1.2s ease both; }
+@keyframes fx-flash { from { box-shadow: 0 0 0 6px rgba(8,227,194,.25), var(--shadow); } to { box-shadow: var(--shadow); } }
+
+/* Empty */
+.fx-empty {
+  grid-column: 1 / -1; text-align: center; color: var(--muted);
+  padding: 24px 8px;
+}
+.fx-emoji { font-size: 32px; margin-bottom: 4px; }
+
+/* Footer / pager */
+.fx-footer {
+  width: min(1200px, 94%); margin: 16px auto 0;
+  display: flex; gap: 10px; align-items: center; justify-content: space-between;
+}
+.fx-pager { display: flex; gap: 8px; align-items: center; }
+.fx-pagesize { display: flex; gap: 8px; align-items: center; }
+.fx-btn.ghost { background: transparent; }
+.fx-btn.primary {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent), transparent 20%), var(--card-2));
+  border-color: color-mix(in srgb, var(--accent), transparent 35%);
+}
+.fx-btn.danger {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--danger), transparent 25%), var(--card-2));
+  border-color: color-mix(in srgb, var(--danger), transparent 45%);
+}
+
+/* FAB */
+.fx-fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 20;
+  width: 58px; height: 58px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: radial-gradient(120px 120px at 30% 30%, rgba(138,123,255,.45), transparent 60%),
+              radial-gradient(120px 120px at 70% 70%, rgba(8,227,194,.45), transparent 60%),
+              linear-gradient(180deg, var(--card-1), var(--card-2));
+  color: var(--ink); box-shadow: var(--shadow); cursor: pointer;
+  display: grid; place-items: center;
+  transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.fx-fab:hover { transform: translateY(-2px); border-color: var(--ring); box-shadow: 0 0 0 5px var(--ring), var(--shadow); }
+.fx-plus { font-size: 28px; line-height: 1; margin-top: -2px; }
+
+/* Modal */
+.fx-modal {
+  position: fixed; inset: 0; z-index: 30; display: grid; place-items: center;
+  background: rgba(0,0,0,.45);
+}
+.fx-modal-card {
+  width: min(560px, 92vw);
+  background: linear-gradient(180deg, rgba(15,16,32,.85), rgba(15,16,32,.75));
+  border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow);
+  backdrop-filter: var(--blur);
+}
+.fx-modal-head {
+  padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;
+}
+.fx-modal-head h3 { margin: 0; font-size: 18px; }
+.fx-close { background: transparent; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
+
+.fx-form { padding: 12px 14px; display: grid; gap: 12px; }
+.fx-field { display: grid; gap: 6px; }
+.fx-field span { color: var(--muted); font-size: 12px; }
+.fx-field input {
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  border: 1px solid var(--border); border-radius: 12px; color: var(--ink);
+  padding: 10px 12px; outline: none;
+}
+.fx-field input:focus { border-color: var(--ring); box-shadow: 0 0 0 3px var(--ring); }
+
+.fx-modal-actions { display: flex; gap: 8px; justify-content: flex-end; padding-top: 6px; }
+.fx-modal-body { padding: 12px 14px; }
+
+.fx-note.error {
+  color: #ffd7d7; border: 1px solid color-mix(in srgb, var(--danger), transparent 50%);
+  background: color-mix(in srgb, var(--danger), transparent 86%);
+  border-radius: 10px; padding: 8px 10px;
+}
+
+/* Toast */
+.fx-toast {
+  position: fixed; right: 18px; top: 18px; z-index: 40;
+  padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card-1), var(--card-2));
+  box-shadow: var(--shadow);
+  animation: fx-pop .12s ease-out;
+}
+@keyframes fx-pop { from { transform: translateY(-6px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+
+/* Small screens */
+@media (max-width: 720px) {
+  .fx-header { grid-template-columns: 1fr; }
+  .fx-toolbar { flex-wrap: wrap; }
+  .fx-search { min-width: 100%; }
+  .fx-sort { margin-left: auto; }
+}
